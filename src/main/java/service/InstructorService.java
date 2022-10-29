@@ -1,0 +1,20 @@
+package service;
+
+import model.Instructor;
+
+import java.util.List;
+
+public interface InstructorService {
+
+    void saveInstructor(Instructor instructor);
+
+    void updateInstructor(Long id, Instructor instructor);
+
+    Instructor getInstructorById(Long id);
+
+    List<Instructor> getInstructorByCourseId(Long id);
+
+    void deleteInstructorById(Long id);
+
+    void assignInstructorToCourse(Long course_id,Long instructor_id);
+}
