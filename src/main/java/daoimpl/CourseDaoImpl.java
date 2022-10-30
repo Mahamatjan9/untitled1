@@ -5,10 +5,12 @@ import dao.CourseDao;
 
 import model.Course;
 import model.Instructor;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class CourseDaoImpl implements CourseDao {
@@ -32,7 +34,7 @@ public class CourseDaoImpl implements CourseDao {
             session.beginTransaction();
 
             Course course1 = session.find(Course.class,id);
-            course1.setName(course.getName());
+            course1.setCoursename(course.getCoursename());
             course1.setDescription(course.getDescription());
             course1.setDuration(course.getDuration());
             course1.setInstructors(course.getInstructors());
@@ -108,24 +110,21 @@ public class CourseDaoImpl implements CourseDao {
 
     @Override
     public Course getCourseByName(String name) {
-        try {
-            Session session = sessionFactory.openSession();
+        try (Session session = sessionFactory.openSession();) {
             session.beginTransaction();
-            List<Course> courses = session.createQuery("select c from Course c", Course.class).list();
-            for (Course course : courses) {
-                if (course.getName().equals(name)) {
-                    return course;
-                } else {
-                    System.out.println("error getCourseBy name");
-                }
-
-            }
+            List<Course> courses = session.createQuery("select c from Course c").list();
             session.getTransaction().commit();
-            session.close();
+            for (Course a : courses) {
+                if (a.getCoursename().contains(name)) {
+                    return a;
+                }
+            }
 
-        }catch (Exception e){
-            System.out.println("error get corse by name");
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+
         }
         return null;
+
     }
 }

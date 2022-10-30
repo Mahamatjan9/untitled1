@@ -14,10 +14,10 @@ public class LessonDaoImpl implements LessonDao {
     private final SessionFactory sessionFactory = Util.getSessionFactory();
     @Override
     public void saveLesson(Long course_id, Lesson lesson) {
-        try(Session session = sessionFactory.openSession();) {
+        try(Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             Course course = session.get(Course.class,course_id);
-            lesson.setCourse(course);
+             lesson.setCourse(course);
             session.save(lesson);
             session.getTransaction().commit();
         }catch (Exception e){

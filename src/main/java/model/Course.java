@@ -22,7 +22,7 @@ public class Course {
     private Long id;
 
     @Column(length = 25)
-    private String name;
+    private String coursename;
 
     @Column(length = 30)
     private String duration;
@@ -45,7 +45,7 @@ public class Course {
 
     public Course(String name, String duration, LocalDate createAt, String imagineLink,
                   String description) {
-        this.name = name;
+        this.coursename = name;
         this.duration = duration;
         this.createAt = createAt;
         this.imagineLink = imagineLink;
@@ -58,7 +58,7 @@ public class Course {
     @Override
     public String toString() {
         return "Course{" +
-                "name='" + name + '\'' +
+                "name='" + coursename + '\'' +
                 ", duration='" + duration + '\'' +
                 ", createAt=" + createAt +
                 ", imagineLink='" + imagineLink + '\'' +
